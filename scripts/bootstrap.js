@@ -1,21 +1,21 @@
-
 var App = App || {};
 
 (function() {
     'use strict';
 
-    var Index = App.Index;
+    var e = React.createElement
+      , Index = App.Index;
 
     var Bootstrap = React.createClass({
         getInitialState: function() {
             return {
-                current: Index
+                shown: Index
             }
         },
 
         componentWillMount: function() {
             Backbone.Events.on('change:component', function(component) {
-                this.setState({current: component});
+                this.setState({shown: component});
             }.bind(this));
         },
 
@@ -24,14 +24,12 @@ var App = App || {};
         },
 
         render: function() {
-            return React.createElement(this.state.current, null);
+            return e(this.state.shown, null);
         }
     });
 
-    var mount = document.getElementById('bootstrap');
-    
-    new App.Router(function() {
-        React.render(<Bootstrap />, mount);
+    new App.Router(function(mount) {
+        React.render(e(Bootstrap, null), mount);
         Backbone.history.start();
-    });
+    }.bind(null, document.getElementById('bootstrap')));
 })();

@@ -15,15 +15,19 @@ var App = App || {};
         },
 
         index: function() {
-            Backbone.Events.trigger('change:component', App.Index);
+           Backbone.Events.trigger('change:component', App.Index);
         },
 
         about: function() {
-            Backbone.Events.trigger('change:component', App.About);
+            $script('scripts/components/about.js', function() {
+                Backbone.Events.trigger('change:component', App.About);
+            });
         },
 
         contact: function() {
-            Backbone.Events.trigger('change:component', App.Contact);
+            $script('scripts/components/contact.js', function() {
+                Backbone.Events.trigger('change:component', App.Contact);
+            });
         }
     });
 

@@ -3,6 +3,8 @@ var App = App || {};
 (function() {
     'use strict';
 
+    var e = React.createElement;
+
     var Contact = React.createClass({
         getInitialState: function() {
             return {
@@ -33,17 +35,17 @@ var App = App || {};
             var yourName = this.renderName();
         
             return (
-                <div>
-                    <h1>Contact</h1>
-                    <form onSubmit={this.handleSubmit}>
-                        <label>
-                            Type your name&nbsp;
-                            <input name="name" ref="name" />
-                        </label>
-                        <button type="submit">send</button>
-                    </form>
-                    {yourName}
-                </div>
+                e('div', null, 
+                    e('h1', null, 'Contact'),
+                    e('form', {onSubmit:this.handleSubmit},
+                        e('label', null,
+                            'Type your name',
+                            e('input', {name:'name', 'ref':'name'})
+                        ),
+                        e('button', {type:'submit'}, 'send')
+                    ),
+                    yourName
+                )
             );
         }
     });
