@@ -4,32 +4,34 @@ var App = App || {};
     'use strict';
 
     var e = React.createElement
-      , Index = App.Index;
+      , events = Backbone.Events;
 
     var Bootstrap = React.createClass({
         getInitialState: function() {
             return {
-                shown: Index
+                shown: App.Index
             }
         },
 
         componentWillMount: function() {
-            Backbone.Events.on('change:component', function(component) {
+            events.on('change:component', function(component) {
                 this.setState({shown: component});
             }.bind(this));
         },
 
         componentWillUnmount: function() {
-            Backbone.Events.off('change:component');
+            events.off('change:component');
         },
 
         render: function() {
             return e(this.state.shown, null);
         }
     });
+    
+    var mount = document.getElementById('bootstrap');
 
-    new App.Router(function(mount) {
+    new App.Router(function() {
         React.render(e(Bootstrap, null), mount);
         Backbone.history.start();
-    }.bind(null, document.getElementById('bootstrap')));
+    });
 })();

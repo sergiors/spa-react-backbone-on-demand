@@ -2,6 +2,8 @@ var App = App || {};
 
 (function() {
     'use strict';
+    
+    var events = Backbone.Events;
 
     var Router = Backbone.Router.extend({
         routes: {
@@ -11,25 +13,28 @@ var App = App || {};
         },
 
         initialize: function(callback) { // keep an eye on callback
-            callback();
+            callback(this);
+        },
+        
+        execute: function(callback, args, name) {
+            $script('scripts/components/' + name + '.js', function() {
+                if (callback) callback.apply(this, args);
+            });
         },
 
         index: function() {
-           Backbone.Events.trigger('change:component', App.Index);
+           events.trigger('change:component', App.Index);
         },
 
         about: function() {
-            $script('scripts/components/about.js', function() {
-                Backbone.Events.trigger('change:component', App.About);
-            });
+            events.trigger('change:component', App.About);
         },
 
         contact: function() {
-            $script('scripts/components/contact.js', function() {
-                Backbone.Events.trigger('change:component', App.Contact);
-            });
+            events.trigger('change:component', App.Contact);
         }
     });
+
 
     App.Router = Router;
 })();
