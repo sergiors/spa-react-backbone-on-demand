@@ -9,22 +9,34 @@ var App = App || {};
     var Bootstrap = React.createClass({
         getInitialState: function() {
             return {
-                shown: App.Index
+                shown: null,
+                wait: true
             }
         },
 
         componentWillMount: function() {
-            events.on('change:component', function(component) {
-                this.setState({shown: component});
-            }.bind(this));
+            events.on('change', function(component) {
+                this.setState({
+                    shown: component,
+                    wait: false
+                });
+            }, this);
+            
+            events.on('wait', function() {
+                this.setState({wait: true});
+            }, this);
         },
 
         componentWillUnmount: function() {
-            events.off('change:component');
+            events.off('change').off('wait');
         },
 
         render: function() {
-            return e(this.state.shown, null);
+            if (this.state.wait) {
+                return e('p', null, 'Please, wait...');
+            }
+            
+            return this.state.shown && e(this.state.shown, null);
         }
     });
     

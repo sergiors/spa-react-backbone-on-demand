@@ -17,21 +17,23 @@ var App = App || {};
         },
         
         execute: function(callback, args, name) {
+            events.trigger('wait');
+            
             $script('scripts/components/' + name + '.js', function() {
                 if (callback) callback.apply(this, args);
             });
         },
 
         index: function() {
-           events.trigger('change:component', App.Index);
+           events.trigger('change', App.Index);
         },
 
         about: function() {
-            events.trigger('change:component', App.About);
+            events.trigger('change', App.About);
         },
 
         contact: function() {
-            events.trigger('change:component', App.Contact);
+            events.trigger('change', App.Contact);
         }
     });
 

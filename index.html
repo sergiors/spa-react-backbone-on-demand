@@ -13,17 +13,29 @@
     </ul>
     <div id="bootstrap">Please, wait...</div>
 
-    <script src="bower_components/react/react-with-addons.js"></script>
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/underscore/underscore.js"></script>
-    <script src="bower_components/backbone/backbone.js"></script>
-    <script src="bower_components/scriptjs/dist/script.js"></script>
-    
-     <script src="scripts/backbone.patch.js"></script>
-    
-    <script src="scripts/components/index.js"></script>
-    <script src="scripts/router.js"></script>
-    <script src="scripts/bootstrap.js"></script>
+    <script>
+        (function(d) {
+            var s = d.createElement('script')
+              , m = d.getElementsByTagName('script')[0];
+            s.async = 1;
+            s.src = 'bower_components/scriptjs/dist/script.min.js';
+            m.parentNode.insertBefore(s,m);
+
+            s.onload = function() {
+                $script([
+                    'bower_components/react/react.min.js',
+                    'bower_components/lodash/lodash.min.js',
+                    'bower_components/exoskeleton/exoskeleton.js',
+                ], function() {
+                    $script([
+                        'scripts/backbone.patch.js',
+                        'scripts/router.js',
+                        'scripts/bootstrap.js'
+                    ]);
+                });
+            }
+        })(document);
+    </script>
 </body>
 
 </html>
